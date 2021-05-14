@@ -66,7 +66,8 @@ const commands = []
 // Kue Jobs
 const jobs = [
   'App/Jobs/NewBetMail',
-  'App/Jobs/WelcomeUserMail'
+  'App/Jobs/WelcomeUserMail',
+  'App/Jobs/ForgotPasswordMail'
 ]
 
 module.exports = { providers, aceProviders, aliases, commands, jobs }

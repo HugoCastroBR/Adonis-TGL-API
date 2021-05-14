@@ -10,7 +10,7 @@ Route.post('register','UserController.store').validator('User')
 Route.post('auth','SessionController.store').validator('Session')
 
 Route.post('reset-password','PasswordController.store').validator('ForgotPassword')
-Route.put('reset-password/:token','PasswordController.update').validator('ResetPassword')
+Route.put('reset-password','PasswordController.update').validator('ResetPassword')
 
 
 Route.group(() => {
