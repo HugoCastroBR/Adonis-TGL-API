@@ -9,6 +9,7 @@
  */
 
 const Bet = use('App/Models/Bet')
+const Game = use('App/Models/Game')
 
 class BetController {
   
@@ -22,7 +23,23 @@ class BetController {
     let data = request.only([
       'bets',
     ])
-    data = data.bets.map(e => {return {...e, user_id: auth.user.id}}) 
+
+    const getPrice = async (game_id) => {
+      const game = await Game.findOrFail(game_id)
+      return game
+    }
+
+    const item = await getPrice(1)
+    data = data.bets.map(e => {return { ...e, user_id: auth.user.id }}) 
+    
+
+    data = await Promise.all(data.map(async (e) => {
+      const ItemPrice = await getPrice(e.game_id)
+      const Item = {...e, price:Number(ItemPrice.price)}
+      console.log(Item)
+      return Item
+    })) 
+
     // const SaveBet = await Bet.createMany({...data,user_id: auth.user.id})
     const SaveBet = await Bet.createMany([...data])
     return SaveBet

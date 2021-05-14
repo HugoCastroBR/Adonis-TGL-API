@@ -20,6 +20,7 @@ Route.group(() => {
   Route.delete('user','UserController.destroy')
   Route.get('user','UserController.show')
   Route.put('/update-user',"UserController.update")
+  Route.get('users','UserController.index')
 
   Route.resource('/games','GameController').apiOnly()
   .validator(new Map(
