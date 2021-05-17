@@ -2,6 +2,7 @@
 
 const Mail = use('Mail')
 
+
 class NewBetMail {
   // If this getter isn't provided, it will default to 1.
   // Increase this number to increase processing concurrency.
@@ -15,11 +16,11 @@ class NewBetMail {
   }
 
   // This is where the work is done.
-  async handle ({ email,username, type }) {
+  async handle ({ email,username }) {
     console.log("Job executando")
     await Mail.send(['emails.new_bet'],
     {
-        username, type
+        username
     },
     message => {
         message.to(email)

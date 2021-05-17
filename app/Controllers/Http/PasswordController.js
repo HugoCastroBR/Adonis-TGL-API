@@ -4,7 +4,6 @@ const dateFns = require('date-fns')
 const crypto = require('crypto')
 
 const User = use('App/Models/User')
-const Mail = use('Mail')
 const Kue = use('Kue')
 const Job = use ('App/Jobs/ForgotPasswordMail')
 
@@ -32,21 +31,19 @@ class PasswordController {
             try {
                 const { email, token, password } = request.all()
                 const user = await User.findByOrFail('token', token)
-
                 if (email === user.email) {
                     let now = new Date()
                     let tokenDate = user.token_created_at
+
                     tokenDate = dateFns.addDays(tokenDate, 2)
 
                     if (dateFns.isAfter(now, tokenDate)) {
-
                         return response.send({ error: { message: "Token Vencido" } })
                     }
 
                     user.token = null
                     user.token_created_at = null
                     user.password = password
-
                     await user.save()
                 }
             } catch (err) {

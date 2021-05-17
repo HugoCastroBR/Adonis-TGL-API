@@ -17,7 +17,6 @@ class ForgotPasswordMail {
 
   // This is where the work is done.
   async handle ({email, user}) {
-    console.log('ForgotPasswordMail-job started')
 
     await Mail.send(
       ['emails.forgot_password'],

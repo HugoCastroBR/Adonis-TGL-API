@@ -26,7 +26,8 @@ class UserController {
     }
     async update ({request,auth,response}) {
         const user = await User.findOrFail(auth.user.id)
-        const data = request.only(['username','about','phone_number'])
+        let data = request.only(['username','about','phone_number','password','email'])
+
         if(data['phone_number']?.length > 0){
             if(data['phone_number'].length <= 7 || data['phone_number'].length > 12){
                 return response.status(406).send("The phone number needs to be 8 to 12 characters")
@@ -35,6 +36,8 @@ class UserController {
         if(data?.username?.length <= 3 || data?.username?.length > 30){
             return response.status(406).send("The username needs to be 4 up to 30 characters")
         }
+        
+
         user.merge(data)
         await user.save()
         return user
@@ -46,10 +49,15 @@ class UserController {
                         .fetch()
         return user
     }
-    async destroy ({ auth, response }) {
+    async destroy ({ auth, response, request }) {
+        const data = request.only(['id'])
         if(auth.user.isAdmin){
-            const user = await User.findOrFail(auth.user.id)
-            await user.delete()
+            try {
+                const user = await User.findOrFail(data.id)
+                await user.delete()
+            } catch (err) {
+                return response.status(400).send("User not found")
+            }
         }else{
             return response.status(401).send("Only admins can do that")
         }

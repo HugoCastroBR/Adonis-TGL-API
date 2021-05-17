@@ -62,7 +62,7 @@ class GameController {
     
   }
 
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, request, response,auth }) {
     if(auth.user.isAdmin){
       const game = await Game.findOrFail(params.id)
       await game.delete()

@@ -6,8 +6,6 @@ const Antl = use('Antl')
 class User {
 
 
-  
-
   get validateAll () {
     return true 
   }

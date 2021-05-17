@@ -2,21 +2,23 @@
 
 const Antl = use('Antl')
 
-class Bet {
+
+class UserDelete {
+
   get validateAll () {
     return true 
   }
+
   get rules () {
     return {
-      bets: "required|array",
-      'bets.numbers':"required",
-      'bets.game_id': "required"
+      id: "required"
     }
   }
 
   get messages () {
     return Antl.list('validation')
   }
+
 }
 
-module.exports = Bet
+module.exports = UserDelete
