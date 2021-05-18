@@ -6,8 +6,7 @@ class Bet extends Model {
 
     static boot () {
         super.boot()
-        this.addHook('afterCreate','BetHook.sendNewBetEmail')
-        this.addHook('beforeUpdate','BetHook.sendNewBetEmail')
+
         
     }
 

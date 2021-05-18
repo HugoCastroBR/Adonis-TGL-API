@@ -16,10 +16,10 @@ class UserController {
     async store ({ request,response }) {
         const data = request.only(['username','password','email'])
         if(data.password.length <= 5 || data.password.length > 14){
-            return response.status(406).send("The password needs to be 6 up to 14 characters")
+            return response.status(400).send("The password needs to be 6 up to 14 characters")
         }
         if(data.username.length <= 3 || data.username.length > 30){
-            return response.status(406).send("The username needs to be 4 up to 30 characters")
+            return response.status(400).send("The username needs to be 4 up to 30 characters")
         }
         const user = await User.create(data)
         return user
@@ -30,11 +30,11 @@ class UserController {
 
         if(data['phone_number']?.length > 0){
             if(data['phone_number'].length <= 7 || data['phone_number'].length > 12){
-                return response.status(406).send("The phone number needs to be 8 to 12 characters")
+                return response.status(400).send("The phone number needs to be 8 to 12 characters")
             }
         }
         if(data?.username?.length <= 3 || data?.username?.length > 30){
-            return response.status(406).send("The username needs to be 4 up to 30 characters")
+            return response.status(400).send("The username needs to be 4 up to 30 characters")
         }
         
 

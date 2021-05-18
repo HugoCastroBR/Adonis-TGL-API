@@ -2,9 +2,14 @@
 
 const Antl = use('Antl')
 
-class UserUpdate {
+const Validator = use('Validator')
 
-  
+
+
+
+
+
+class UserUpdate {
 
   get validateAll () {
     return true 
@@ -12,14 +17,17 @@ class UserUpdate {
 
   get rules () {
     const ctx = this.ctx
-    // console.log(ctx.auth.user)
-    console.log(ctx.request.body)
+    const userId = ctx.auth.user.id
+
+
     return {
-      username: 'unique:users',
-      email: 'email|unique:users',
-      password: 'confirmed'
+      username: `unique:users,username,id,${userId}`,
+      email: `email|unique:users,email,id,${userId}`,
+      about: `unique:users,username,id,${userId}`,
+      phone_number: `unique:users,username,id,${userId}`,
+      password: `confirmed`
     }
-  }
+  } 
 
   get messages () {
     return Antl.list('validation')
@@ -27,3 +35,4 @@ class UserUpdate {
 }
 
 module.exports = UserUpdate
+  
