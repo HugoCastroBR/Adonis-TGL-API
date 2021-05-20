@@ -20,7 +20,7 @@ class ForgotPasswordMail {
 
     await Mail.send(
       ['emails.forgot_password'],
-      { email, token: user.token, link: `localhost:3333/reset-password/${user.token}` },
+      { email, token: user.token, link: `http://localhost:3000/update-password/${user.token}` },
       message => {
           message
               .to(user.email)

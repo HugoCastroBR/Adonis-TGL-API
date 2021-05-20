@@ -117,16 +117,16 @@ class BetController {
 
   async getUserBets ({request,params, auth}) {
     // Function to get the user bets with pagination
-    let data = request.only([
-      'game_id',
-    ])
-    const GameId = data['game_id']
+
+    const GameId = params.game_id
     if(GameId <= 0){
       const bets = await Bet.query()
                         .where("user_id",auth.user.id)
                         .orderBy('game_id','asc')
                         .orderBy('id','asc')
-                        .paginate(params.id,10)
+                        .with('game')
+                        .fetch()
+                        // .paginate(params.page,10)
       return bets
 
     }else{
@@ -135,7 +135,9 @@ class BetController {
                         .where("game_id",GameId)
                         .orderBy('game_id','asc')
                         .orderBy('id','asc')
-                        .paginate(params.id,10)
+                        .with('game')
+                        .fetch()
+                        // .paginate(params.page,10)
       return bets
     }
     

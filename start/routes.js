@@ -15,7 +15,7 @@ Route.put('reset-password','PasswordController.update').validator('ResetPassword
 
 Route.group(() => {
 
-  Route.get('/user-bets/:id','BetController.getUserBets')
+  Route.get('/user-bets/:game_id/:page','BetController.getUserBets')
 
   Route.delete('user','UserController.destroy')
   Route.get('user','UserController.show')
