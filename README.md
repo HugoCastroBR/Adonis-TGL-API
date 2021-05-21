@@ -1,28 +1,18 @@
-# Adonis API application
+# TGL ADONIS API
+TGL is a bet page, using react in the front-end and Adonis in back-end
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+## Technologies: 
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+* Javascript
+* Adonis
+* Redis
+* Postgres
 
-## Setup
+## Usage:
+After Npm install
 
-Use the adonis command to install the blueprint
+* Run Docker and install redis alpine (configure the port in .env file)
+* Run adonis serve --dev in the directory 
+* Run adonis kue:listen in the directory 
 
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
-
-
-### Migrations
-
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
+> This is part of Lab Luby JS
