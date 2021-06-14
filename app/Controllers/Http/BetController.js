@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict'
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -13,11 +14,9 @@ const BetService = use("App/Services/BetService");
 
 
 
-
-
 class BetController {
   
-  async index ({ request, response, view }) {
+  async index () {
     const bets = await Bet.query().with('game').fetch()
     return bets
   }
@@ -64,7 +63,6 @@ class BetController {
       const Item = {...e, price:Number(GameTypeInfos.price)}
       return Item
 
-
     })) 
 
     // const SaveBet = await Bet.createMany({...data,user_id: auth.user.id})
@@ -104,7 +102,7 @@ class BetController {
   }
 
   
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, response }) {
     if(auth.user.isAdmin){
       const bet = await Bet.findOrFail(params.id)
       await bet.delete()
@@ -115,13 +113,39 @@ class BetController {
   }
 
 
-  async getUserBets ({request,params, auth}) {
-    // Function to get the user bets with pagination
+  async getUserBets ({params, auth}) {
 
+    // Function to get the user bets 
+
+    // const GameId = params.game_id
+    // if(GameId <= 0){
+    //   const bets = await Bet.query()
+    //                     .where("user_id",auth.user.id)
+    //                     .orderBy('game_id','asc')
+    //                     .orderBy('id','asc')
+    //                     .with('game')
+    //                     .fetch()
+    //                     // .paginate(params.page,10)
+    //   return bets
+
+    // }else{
+    //   const bets = await Bet.query()
+    //                     .where("user_id",auth.user.id)
+    //                     .where("game_id",'=',GameId)
+    //                     .orderBy('game_id','asc')
+    //                     .orderBy('id','asc')
+    //                     .with('game')
+    //                     .fetch()
+    //                     // .paginate(params.page,10)
+    //   return bets
+    // }
+    
+    
     const GameId = params.game_id
-    if(GameId <= 0){
+      console.log(GameId)
       const bets = await Bet.query()
                         .where("user_id",auth.user.id)
+                        .where("game_id",`${GameId == 0 ? '>' : '='}`,GameId) // if Game id == 0, show all gameId bigger than 0, but, if Game id == (x > 0) show gamId = x
                         .orderBy('game_id','asc')
                         .orderBy('id','asc')
                         .with('game')
@@ -129,19 +153,6 @@ class BetController {
                         // .paginate(params.page,10)
       return bets
 
-    }else{
-      const bets = await Bet.query()
-                        .where("user_id",auth.user.id)
-                        .where("game_id",GameId)
-                        .orderBy('game_id','asc')
-                        .orderBy('id','asc')
-                        .with('game')
-                        .fetch()
-                        // .paginate(params.page,10)
-      return bets
-    }
-    
-    
   }
 
   

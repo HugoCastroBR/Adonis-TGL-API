@@ -1,11 +1,12 @@
 'use strict'
 
 
+// eslint-disable-next-line no-undef
 const User = use('App/Models/User')
 
 
 class UserController {
-    async index({ request, auth }) {
+    async index({ auth,response }) {
         if(auth.user.isAdmin){
             const Users = await User.query().with('bets').fetch()
             return Users
@@ -66,4 +67,5 @@ class UserController {
     
 }
 
+// eslint-disable-next-line no-undef
 module.exports = UserController
